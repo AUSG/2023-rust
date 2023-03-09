@@ -66,7 +66,9 @@ impl Widget for Label {
     }
 
     fn draw_into(&self, buffer: &mut dyn std::fmt::Write) {
-        buffer.write_fmt(format_args!("{}\n", self.label)).unwrap();
+        buffer
+            .write_fmt(format_args!("{}\n", self.label))
+            .unwrap_or_default();
     }
 }
 
@@ -78,7 +80,7 @@ impl Widget for Button {
     fn draw_into(&self, buffer: &mut dyn std::fmt::Write) {
         buffer
             .write_fmt(format_args!("| {} |\n", self.label.label))
-            .unwrap();
+            .unwrap_or_default();
     }
 }
 
@@ -88,14 +90,20 @@ impl Widget for Window {
     }
 
     fn draw_into(&self, buffer: &mut dyn std::fmt::Write) {
-        buffer.write_str(("=".repeat(8) + "\n").as_str()).unwrap();
-        buffer.write_fmt(format_args!("{}\n", self.title)).unwrap();
-        buffer.write_str(("=".repeat(8) + "\n").as_str()).unwrap();
-        buffer.write_str("\n").unwrap();
+        buffer
+            .write_str(("=".repeat(8) + "\n").as_str())
+            .unwrap_or_default();
+        buffer
+            .write_fmt(format_args!("{}\n", self.title))
+            .unwrap_or_default();
+        buffer
+            .write_str(("=".repeat(8) + "\n").as_str())
+            .unwrap_or_default();
+        buffer.write_str("\n").unwrap_or_default();
 
         for widget in self.widgets.iter() {
             widget.draw_into(buffer);
-            buffer.write_str("\n").unwrap();
+            buffer.write_str("\n").unwrap_or_default();
         }
     }
 }
