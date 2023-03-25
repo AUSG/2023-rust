@@ -50,7 +50,7 @@ fn main() {
             left_fork: forks[index_cur].clone(),
             right_fork: forks[index_next].clone(),
             thoughts: tx.clone(),
-        })
+        });
     }
 
     // Make them think and eat
@@ -62,6 +62,8 @@ fn main() {
             }
         });
     }
+
+    drop(tx);
 
     // Output their thoughts
     for thought in rx {
